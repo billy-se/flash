@@ -40,3 +40,4 @@ out/
 build/
 .gradle/
 todo.md
+*.hprof
