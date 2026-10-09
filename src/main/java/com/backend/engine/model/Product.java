@@ -1,4 +1,4 @@
-package com.engine.model;
+package com.backend.    engine.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,15 +13,19 @@ import lombok.NoArgsConstructor;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GeneratedType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false);
+    @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false);
+    @Column(nullable = false)
     private Integer stockQuantity;
+
+    public int getStock() {
+        return stockQuantity;
+    }
 }

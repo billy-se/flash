@@ -1,4 +1,4 @@
-package com.engine.model;
+package com.backend.engine.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,17 +14,17 @@ import java.time.LocalDateTime;
 public class FlashSaleOrder {
 
     @Id
-    @GeneratedValue(strategy = GeneratedType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column(nullable = false)
     private Long productId;
 
     @Column(nullable = false)
-    private Integer = quantity;
+    private Integer quantity;
 
     @Column(nullable = false)
     private String status;

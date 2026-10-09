@@ -1,6 +1,6 @@
-package com.engine.repository;
+package com.backend.engine.repository;
 
-import com.engine.model.FlashSaleOrder;
+import com.backend.engine.model.FlashSaleOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
