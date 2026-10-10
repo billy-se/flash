@@ -23,6 +23,8 @@ docker compose up -d
 
 in terminal shell:
 
+```bash
 Invoke-RestMethod -Method Post -Uri "http://localhost:8443/api/checkout" -ContentType "application/json" -Body '{"userId":"user123", "productId":1, "quantity":1}'
+```
 
 (will improve this later, recovering from framework and abstraction fatigue)
