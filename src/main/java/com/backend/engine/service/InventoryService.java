@@ -23,4 +23,9 @@ public class InventoryService {
 
         return result != null && result == 1;
     }
+
+    public void restoreStock(String productId, int quantity) {
+        String stockKey = "product:" + productId + ":stock";
+        redisTemplate.opsForValue().increment(stockKey, quantity);
+    }
 }

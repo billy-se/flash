@@ -41,3 +41,12 @@ build/
 .gradle/
 todo.md
 *.hprof
+
+# JMeter logs and test results
+*.jtl
+*.log
+jmeter.log
+
+# JMeter HTML reports
+load-tests/jmeter-report/
+load-tests/jmeter-report-heavy/

@@ -6,35 +6,31 @@ import com.backend.engine.repository.OrderRepository;
 import com.backend.engine.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.backend.engine.service.InventoryService;
 
 @Service
 public class FlashSaleService {
 
-    private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final InventoryService inventoryService;
 
-    public FlashSaleService(ProductRepository productRepository, OrderRepository orderRepository) {
-        this.productRepository = productRepository;
+    public FlashSaleService(OrderRepository orderRepository, InventoryService inventoryService) {
         this.orderRepository = orderRepository;
+        this.inventoryService = inventoryService;
     }
 
     @Transactional
     public FlashSaleOrder purchaseProduct(Long productId, String userId, int quantity) {
-        Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-
-        if (product.getStockQuantity() < quantity) {
-            throw new IllegalStateException("Out of stock!");
+        try {
+            FlashSaleOrder order = new FlashSaleOrder();
+            order.setProductId(productId);
+            order.setUserId(userId);
+            order.setQuantity(quantity);
+            order.setStatus("SUCCESS");
+            return orderRepository.save(order);
+        } catch (Exception e) {
+            inventoryService.restoreStock(String.valueOf(productId), quantity);
+            throw new RuntimeException("Database error, stock restored in Redis", e);
         }
-
-        product.setStockQuantity(product.getStockQuantity() - quantity);
-        productRepository.save(product);
-
-        FlashSaleOrder order = new FlashSaleOrder();
-        order.setProductId(productId);
-        order.setUserId(userId);
-        order.setQuantity(quantity);
-        order.setStatus("SUCCESS");
-        return orderRepository.save(order);
     }
 }

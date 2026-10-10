@@ -24,7 +24,19 @@ docker compose up -d
 in terminal shell:
 
 ```bash
-Invoke-RestMethod -Method Post -Uri "http://localhost:8443/api/checkout" -ContentType "application/json" -Body '{"userId":"user123", "productId":1, "quantity":1}'
+jmeter -n -t "Thread Group.jmx" -l results.jtl
 ```
+---
+Performance
 
-(will improve this later, recovering from framework and abstraction fatigue)
+| Metric | Value |
+| :--- | :--- |
+| **Concurrency** | 5,000 threads |
+| **Error Rate** | 12.62% |
+| **Mean Latency** | 7,648 ms |
+| **Throughput** | 386.76 req/s |
+
+### Notes
+* Redis handles zero stock atomically
+* PostgreSQL successfully records valid orders asynchronously via RabbitMQ
+* Errors and latency spike due to connection pool saturation or hardware limitation at 5,000 threads 
