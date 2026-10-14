@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.data.redis.core.RedisTemplate;
 import com.backend.engine.service.InventoryService;
 import com.backend.engine.model.FlashSaleOrder;
-import com.backend.engine.model.OrderRepository;
+import com.backend.engine.repository.OrderRepository;
+
 import java.time.Duration;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -37,7 +41,7 @@ public class CheckoutController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/order/{userId")
+    @GetMapping("/order/{userId}")
     public ResponseEntity<?> getOrderStatus(@org.springframework.web.bind.annotation.PathVariable String userId) {
         List<FlashSaleOrder> orders = orderRepository.findByUserId(userId);
         if (orders.isEmpty()) {
